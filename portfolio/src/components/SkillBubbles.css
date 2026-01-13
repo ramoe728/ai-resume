@@ -1,0 +1,158 @@
+.skills-section {
+  padding: 4rem 0;
+}
+
+.skill-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--filter-color);
+  color: var(--filter-color);
+}
+
+.filter-btn.active {
+  background: var(--filter-color);
+  border-color: var(--filter-color);
+  color: white;
+}
+
+.bubbles-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.bubbles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skill-bubble {
+  position: relative;
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--bubble-color) 20%, var(--bg-card)),
+    color-mix(in srgb, var(--bubble-color) 5%, var(--bg-card))
+  );
+  border: 2px solid var(--bubble-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 0.5rem;
+}
+
+.skill-bubble:hover {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--bubble-color) 40%, transparent);
+}
+
+.skill-bubble.highlighted,
+.skill-bubble.active {
+  border-width: 3px;
+  box-shadow: 0 0 30px color-mix(in srgb, var(--bubble-color) 50%, transparent);
+}
+
+.bubble-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--bubble-color) 30%, transparent) 0%,
+    transparent 70%
+  );
+  z-index: -1;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.skill-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.skill-proficiency {
+  font-size: 0.65rem;
+  color: var(--bubble-color);
+  font-weight: 500;
+  margin-top: 0.125rem;
+}
+
+.skill-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .skills-section {
+    padding: 2rem 0;
+  }
+  
+  .bubbles-container {
+    padding: 1rem;
+  }
+  
+  .bubbles-grid {
+    gap: 0.75rem;
+  }
+  
+  .skill-filters {
+    gap: 0.5rem;
+  }
+  
+  .filter-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+}

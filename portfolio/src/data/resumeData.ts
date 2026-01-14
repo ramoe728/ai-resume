@@ -70,7 +70,7 @@ export const experiences: Experience[] = [
       "Built end-to-end, a HIPAA-compliant, quantum-resistant, encrypted social networking platform utilizing patented security architecture for long-term quantum resilience",
       "Developed and tested AI Paralegal agent that performed as a personal injury law paralegal. Capabilities included client communication, document management, scheduling, and medical coordination"
     ],
-    skills: ["JavaScript", "React", "React Native", "iOS", "Mobile Development", "Firebase", "Postgres", "NoSQL", "Post-quantum Encryption", "AI Integration", "Backend Systems", "Azure"],
+    skills: ["JavaScript", "React", "React Native", "iOS", "Mobile Dev", "Firebase", "Postgres", "NoSQL", "Post-quantum Encryption", "AI Integration", "Backend Systems", "Azure"],
     description: "Leading the development of a cutting-edge social networking platform with military-grade encryption and AI-powered legal assistance tools."
   },
   {

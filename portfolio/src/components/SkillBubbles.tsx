@@ -179,6 +179,7 @@ export function SkillBubbles() {
             {activeSkills.length > 0 && (
               <motion.div
                 className="clear-all-bubble"
+                style={{ position: 'relative', zIndex: 10, transform: 'translateZ(0)' }}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}

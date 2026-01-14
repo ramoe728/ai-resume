@@ -84,7 +84,7 @@ export const experiences: Experience[] = [
       "Collaborated and architected the migration of CI/CD automation pipeline to a custom-built test scheduler, resulting in a 30% improvement in regression test performance",
       "Developed a firmware version handler solution for test setup, which allowed tests to bypass irrelevant OTA dependencies. Resulting 20% improvement in automation test success rates"
     ],
-    skills: ["Python", "CI/CD", "Test Automation", "Docker", "Backend Systems", "Embedded Systems", "AWS", "Firebase"],
+    skills: ["Python", "CI/CD", "Test Automation", "Docker", "Backend Systems", "Embedded Systems", "GCP", "AWS", "Firebase"],
     description: "Architecting and optimizing test automation infrastructure for smart home IoT systems."
   },
   {

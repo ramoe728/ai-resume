@@ -181,13 +181,13 @@ export function SkillConnectorLines() {
 
       {paths.map((path) => (
         <g key={path.id}>
-          {/* Background glow line */}
+          {/* Background glow line - subtle glow effect */}
           <path
             d={generatePath(path)}
             fill="none"
             stroke={path.color}
-            strokeWidth="8"
-            strokeOpacity="0.2"
+            strokeWidth="3"
+            strokeOpacity="0.8"
             filter="url(#glow)"
             className="connector-path-glow"
             style={{
@@ -216,7 +216,7 @@ export function SkillConnectorLines() {
             stroke="none"
           />
           
-          {/* Animated traveling dot */}
+          {/* Animated traveling dot - only this dot, no extra endpoint glows */}
           <circle
             r="6"
             fill={path.color}
@@ -241,34 +241,6 @@ export function SkillConnectorLines() {
               fill="freeze"
             />
           </circle>
-          
-          {/* Start point glow */}
-          <circle
-            cx={path.startX}
-            cy={path.startY}
-            r="8"
-            fill={path.color}
-            opacity="0.6"
-            filter="url(#glow)"
-            className="connector-endpoint"
-            style={{
-              animationDelay: `${path.delay}s`,
-            }}
-          />
-          
-          {/* End point glow */}
-          <circle
-            cx={path.endX}
-            cy={path.endY}
-            r="6"
-            fill={path.color}
-            opacity="0.4"
-            filter="url(#glow)"
-            className="connector-endpoint"
-            style={{
-              animationDelay: `${path.delay + 0.3}s`,
-            }}
-          />
         </g>
       ))}
     </svg>

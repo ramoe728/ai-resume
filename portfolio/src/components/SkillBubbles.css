@@ -93,19 +93,12 @@
 }
 
 .skill-name {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-primary);
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.3;
   word-break: break-word;
-}
-
-.skill-proficiency {
-  font-size: 0.65rem;
-  color: var(--bubble-color);
-  font-weight: 500;
-  margin-top: 0.125rem;
 }
 
 .skill-legend {

@@ -49,7 +49,6 @@ function Bubble({ skill, index, isHighlighted, isActive, onClick }: BubbleProps)
       onClick={onClick}
     >
       <span className="skill-name">{skill.name}</span>
-      <span className="skill-proficiency">{skill.proficiency}%</span>
       
       {/* Glow effect for highlighted */}
       {(isHighlighted || isActive) && (

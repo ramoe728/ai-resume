@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe } from 'lucide-react';
 import { profile, education } from '../data/resumeData';
 import './Hero.css';
 
@@ -29,9 +29,7 @@ export function Hero() {
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <div className="profile-image">
-              <div className="profile-placeholder">
-                <span>RM</span>
-              </div>
+              <div className="profile-photo" />
             </div>
             <div className="profile-ring" />
           </motion.div>
@@ -87,13 +85,25 @@ export function Hero() {
           
           <motion.div
             className="hero-education"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.5 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7, duration: 0.6, type: 'spring' }}
           >
-            <div className="education-badge">
-              <span className="education-degree">{education.degree} in {education.field}</span>
-              <span className="education-school">{education.school} • {education.years}</span>
+            <div className="education-card">
+              <div className="education-mascot">
+                <img src="/byu-retro.png" alt="BYU Cougar" />
+              </div>
+              <div className="education-medallion">
+                <img src="/byu-brigham-young-university-medallion.png" alt="BYU Seal" />
+              </div>
+              <div className="education-details">
+                <span className="education-degree">{education.degree}</span>
+                <span className="education-field">{education.field}</span>
+                <div className="education-meta">
+                  <span className="education-school">{education.school}</span>
+                  <span className="education-years">{education.years}</span>
+                </div>
+              </div>
             </div>
           </motion.div>
           

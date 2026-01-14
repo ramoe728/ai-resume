@@ -70,7 +70,7 @@ export const experiences: Experience[] = [
       "Built end-to-end, a HIPAA-compliant, quantum-resistant, encrypted social networking platform utilizing patented security architecture for long-term quantum resilience",
       "Developed and tested AI Paralegal agent that performed as a personal injury law paralegal. Capabilities included client communication, document management, scheduling, and medical coordination"
     ],
-    skills: ["TypeScript", "React", "Post-quantum Encryption", "AI Integration", "HIPAA Compliance", "Backend Systems", "Azure"],
+    skills: ["TypeScript", "React", "React Native", "iOS", "Mobile Development", "Firebase", "NoSQL", "Post-quantum Encryption", "AI Integration", "Backend Systems", "Azure"],
     description: "Leading the development of a cutting-edge social networking platform with military-grade encryption and AI-powered legal assistance tools."
   },
   {
@@ -84,7 +84,7 @@ export const experiences: Experience[] = [
       "Collaborated and architected the migration of CI/CD automation pipeline to a custom-built test scheduler, resulting in a 30% improvement in regression test performance",
       "Developed a firmware version handler solution for test setup, which allowed tests to bypass irrelevant OTA dependencies. Resulting 20% improvement in automation test success rates"
     ],
-    skills: ["Python", "CI/CD", "Test Automation", "Docker", "Backend Systems"],
+    skills: ["Python", "CI/CD", "Test Automation", "Docker", "Backend Systems", "Embedded Systems", "AWS", "Firebase"],
     description: "Architecting and optimizing test automation infrastructure for smart home IoT systems."
   },
   {
@@ -98,7 +98,7 @@ export const experiences: Experience[] = [
       "Designed and implemented test automation with a notification system for a PaaS product, causing a shift from reactive, manual QA to proactive, autonomous QA, resulting 240% faster bug discovery",
       "Achieved a 99.6% reduction in monthly automation resource spending by re-architecting the automation system to utilize self-hosted runners"
     ],
-    skills: ["JavaScript", "Python", "Test Automation", "AWS", "GCP", "Postgres"],
+    skills: ["JavaScript", "Python", "PyTest", "Playwright", "Test Automation", "Azure", "Postgres"],
     description: "Transformed QA processes through intelligent automation and significant cost optimization."
   },
   {
@@ -122,17 +122,23 @@ export const skills: Skill[] = [
   { id: "python", name: "Python", category: "language", proficiency: 89 },
   { id: "cpp", name: "C/C++", category: "language", proficiency: 75 },
   { id: "react", name: "React", category: "framework", proficiency: 93 },
+  { id: "react-native", name: "React Native", category: "framework", proficiency: 88 },
   { id: "azure", name: "Azure", category: "cloud", proficiency: 82 },
   { id: "gcp", name: "GCP", category: "cloud", proficiency: 80 },
   { id: "aws", name: "AWS", category: "cloud", proficiency: 76 },
+  { id: "firebase", name: "Firebase", category: "cloud", proficiency: 85 },
   { id: "docker", name: "Docker", category: "specialty", proficiency: 85 },
   { id: "postgres", name: "Postgres", category: "database", proficiency: 85 },
+  { id: "nosql", name: "NoSQL", category: "database", proficiency: 82 },
   { id: "encryption", name: "Post-quantum Encryption", category: "specialty", proficiency: 88 },
   { id: "test-automation", name: "Test Automation", category: "specialty", proficiency: 92 },
   { id: "ai-integration", name: "AI Integration", category: "specialty", proficiency: 90 },
   { id: "backend", name: "Backend Systems", category: "specialty", proficiency: 91 },
+  { id: "mobile", name: "Mobile Development", category: "specialty", proficiency: 85 },
+  { id: "ios", name: "iOS", category: "specialty", proficiency: 80 },
   { id: "cicd", name: "CI/CD", category: "specialty", proficiency: 88 },
-  { id: "hipaa", name: "HIPAA Compliance", category: "specialty", proficiency: 85 },
+  { id: "pytest", name: "PyTest", category: "framework", proficiency: 90 },
+  { id: "playwright", name: "Playwright", category: "framework", proficiency: 88 },
   { id: "embedded", name: "Embedded Systems", category: "specialty", proficiency: 70 }
 ];
 

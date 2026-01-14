@@ -95,6 +95,9 @@
   overflow: hidden;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-placeholder {
@@ -109,6 +112,16 @@
   font-size: 3rem;
   font-weight: 700;
   color: var(--accent-primary);
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: url('/profile-ryan.JPG');
+  background-size: 200%; /* Zoom control: higher = more zoomed in, lower = zoomed out */
+  background-position: center 30%;
+  background-repeat: no-repeat;
 }
 
 .profile-ring {
@@ -195,29 +208,121 @@
 }
 
 .hero-education {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 540px;
 }
 
-.education-badge {
-  display: inline-flex;
-  flex-direction: column;
+.education-card {
+  display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, 
+    rgba(0, 46, 93, 0.4) 0%, 
+    rgba(0, 46, 93, 0.2) 100%
+  );
+  border: 2px solid #002E5D;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.education-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #002E5D, #0062B8);
+}
+
+/* Retro cougar as subtle background watermark */
+.education-mascot {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 180px;
+  height: 180px;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.education-mascot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(2);
+}
+
+/* BYU Medallion as the main icon */
+.education-medallion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  z-index: 1;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 46, 93, 0.4);
+  padding: 4px;
+}
+
+.education-medallion img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.education-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  z-index: 1;
 }
 
 .education-degree {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
   color: var(--text-primary);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.education-field {
+  font-weight: 600;
+  color: #5B9BD5;
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+.education-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  align-items: center;
 }
 
 .education-school {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.education-years {
   color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(0, 46, 93, 0.3);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 46, 93, 0.5);
 }
 
 .hero-languages {
@@ -294,5 +399,45 @@
   
   .profile-placeholder {
     font-size: 2.5rem;
+  }
+  
+  .profile-photo {
+    background-size: 220%;
+    background-position: center 32%;
+  }
+  
+  .education-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  
+  .education-details {
+    text-align: center;
+  }
+  
+  .education-meta {
+    justify-content: center;
+  }
+  
+  .education-degree {
+    font-size: 1.1rem;
+  }
+  
+  .education-field {
+    font-size: 1rem;
+  }
+  
+  .education-medallion {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .education-mascot {
+    width: 140px;
+    height: 140px;
+    right: -30px;
+    opacity: 0.06;
   }
 }

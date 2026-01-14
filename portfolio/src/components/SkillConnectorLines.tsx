@@ -28,12 +28,12 @@ function hashString(str: string): number {
   return Math.abs(hash);
 }
 
-// Get one of 20 evenly spaced connection points along the top of a card
+// Get one of 30 evenly spaced connection points along the top of a card
 function getConnectionPoint(cardRect: DOMRect, pathId: string): number {
   const padding = cardRect.width * 0.1;
   const usableWidth = cardRect.width - (padding * 2);
-  const spacing = usableWidth / 19; // 19 gaps between 20 points
-  const spotIndex = hashString(pathId) % 20;
+  const spacing = usableWidth / 29; // 29 gaps between 30 points
+  const spotIndex = hashString(pathId) % 30;
   return cardRect.left + padding + (spacing * spotIndex);
 }
 
@@ -202,11 +202,13 @@ export function SkillConnectorLines() {
 
   // Recalculate when active skills change
   useEffect(() => {
-    // Use requestAnimationFrame for smoother updates
-    const frameId = requestAnimationFrame(() => {
+    // Wait for layout animations to complete (300ms) before calculating paths
+    // This ensures connector lines draw from the final position of skill bubbles
+    const timeoutId = setTimeout(() => {
       calculatePaths();
-    });
-    return () => cancelAnimationFrame(frameId);
+    }, 350); // Slightly longer than the 300ms layout animation
+    
+    return () => clearTimeout(timeoutId);
   }, [activeSkills, calculatePaths]);
 
   // Memoize the SVG content to prevent unnecessary re-renders

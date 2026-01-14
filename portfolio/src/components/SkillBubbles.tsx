@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { X } from 'lucide-react';
 import { skills, experiences } from '../data/resumeData';
 import type { Skill } from '../data/resumeData';
@@ -29,6 +29,8 @@ function Bubble({ skill, index, isHighlighted, isActive, onClick }: BubbleProps)
   
   return (
     <motion.div
+      layout
+      layoutId={skill.id}
       className={`skill-bubble ${isHighlighted ? 'highlighted' : ''} ${isActive ? 'active' : ''}`}
       data-skill={skill.name}
       style={{
@@ -42,6 +44,7 @@ function Bubble({ skill, index, isHighlighted, isActive, onClick }: BubbleProps)
         opacity: 1,
       }}
       transition={{ 
+        layout: { duration: 0.3, ease: 'easeInOut' },
         delay: index * 0.05,
         type: 'spring',
         stiffness: 200,
@@ -162,37 +165,44 @@ export function SkillBubbles() {
       
       {/* Bubbles container */}
       <div className="bubbles-container">
-        <div className="bubbles-grid">
-          {filteredSkills.map((skill, index) => (
-            <Bubble
-              key={skill.id}
-              skill={skill}
-              index={index}
-              isHighlighted={isSkillHighlighted(skill.name)}
-              isActive={activeSkills.includes(skill.name)}
-              onClick={() => handleBubbleClick(skill.name)}
-            />
-          ))}
-          
-          {/* Clear all button - appears when skills are selected */}
-          <AnimatePresence>
-            {activeSkills.length > 0 && (
-              <motion.div
-                className="clear-all-bubble"
-                style={{ position: 'relative', zIndex: 10, transform: 'translateZ(0)' }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                whileHover={{ scale: 1.1 }}
-                onClick={handleClearAll}
-                title="Clear all selected skills"
-              >
-                <X size={24} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <LayoutGroup>
+          <div className="bubbles-grid">
+            {filteredSkills.map((skill, index) => (
+              <Bubble
+                key={skill.id}
+                skill={skill}
+                index={index}
+                isHighlighted={isSkillHighlighted(skill.name)}
+                isActive={activeSkills.includes(skill.name)}
+                onClick={() => handleBubbleClick(skill.name)}
+              />
+            ))}
+            
+            {/* Clear all button - appears when skills are selected */}
+            <AnimatePresence mode="popLayout">
+              {activeSkills.length > 0 && (
+                <motion.div
+                  layout
+                  layoutId="clear-all-bubble"
+                  className="clear-all-bubble"
+                  style={{ position: 'relative', zIndex: 10, transform: 'translateZ(0)' }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ 
+                    layout: { duration: 0.3, ease: 'easeInOut' },
+                    opacity: { duration: 0.3, ease: 'easeInOut' }
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  onClick={handleClearAll}
+                  title="Clear all selected skills"
+                >
+                  <X size={24} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </LayoutGroup>
       </div>
       
       {/* Legend */}

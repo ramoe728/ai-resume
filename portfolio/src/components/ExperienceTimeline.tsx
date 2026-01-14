@@ -61,6 +61,7 @@ function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkil
   return (
     <motion.div
       className={`experience-card ${isHighlighted ? 'highlighted' : ''} ${isActive ? 'active' : ''}`}
+      data-experience={experience.id}
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.15, duration: 0.5 }}

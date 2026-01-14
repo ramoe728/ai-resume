@@ -3,13 +3,15 @@ import { HighlightProvider } from './context/HighlightContext';
 import { Hero } from './components/Hero';
 import { SkillBubbles } from './components/SkillBubbles';
 import { ExperienceTimeline } from './components/ExperienceTimeline';
+import { SkillConnectorLines } from './components/SkillConnectorLines';
 import { AIChat } from './components/AIChat';
 import './App.css';
 
 function App() {
   return (
     <HighlightProvider>
-      <div className="app">
+      <div className="app" style={{ position: 'relative' }}>
+        <SkillConnectorLines />
         <main className="main-content">
           <Hero />
           

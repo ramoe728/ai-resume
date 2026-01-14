@@ -30,6 +30,7 @@ function Bubble({ skill, index, isHighlighted, isActive, onClick }: BubbleProps)
   return (
     <motion.div
       className={`skill-bubble ${isHighlighted ? 'highlighted' : ''} ${isActive ? 'active' : ''}`}
+      data-skill={skill.name}
       style={{
         width: size,
         height: size,
@@ -208,6 +209,7 @@ export function SkillBubbles() {
           </div>
         ))}
       </motion.div>
+      
     </section>
   );
 }

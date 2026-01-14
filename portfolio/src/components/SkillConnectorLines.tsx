@@ -211,6 +211,35 @@ export function SkillConnectorLines() {
     return () => clearTimeout(timeoutId);
   }, [activeSkills, calculatePaths]);
 
+  // Watch for experience card height changes (expand/collapse)
+  useEffect(() => {
+    if (activeSkills.length === 0) return;
+
+    const experienceSection = document.getElementById('experience');
+    if (!experienceSection) return;
+
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    
+    const resizeObserver = new ResizeObserver(() => {
+      // Debounce the recalculation
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setDimensions({
+          width: document.documentElement.scrollWidth,
+          height: document.documentElement.scrollHeight,
+        });
+        calculatePaths();
+      }, 350); // Wait for expand/collapse animation
+    });
+
+    resizeObserver.observe(experienceSection);
+
+    return () => {
+      resizeObserver.disconnect();
+      clearTimeout(resizeTimeout);
+    };
+  }, [activeSkills.length, calculatePaths]);
+
   // Memoize the SVG content to prevent unnecessary re-renders
   const linesSvgContent = useMemo(() => {
     if (paths.length === 0) return null;

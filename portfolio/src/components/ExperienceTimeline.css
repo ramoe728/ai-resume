@@ -200,6 +200,24 @@
   font-size: 0.8rem;
   font-weight: 500;
   border: 1px solid rgba(108, 99, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.skill-tag-active {
+  background: color-mix(in srgb, var(--skill-color) 25%, transparent);
+  color: var(--skill-color);
+  border-color: var(--skill-color);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--skill-color) 40%, transparent);
+  animation: skill-tag-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skill-tag-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px color-mix(in srgb, var(--skill-color) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--skill-color) 60%, transparent);
+  }
 }
 
 @media (max-width: 768px) {

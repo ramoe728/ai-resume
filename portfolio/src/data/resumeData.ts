@@ -134,7 +134,7 @@ export const skills: Skill[] = [
   { id: "test-automation", name: "Test Automation", category: "specialty", proficiency: 92 },
   { id: "ai-integration", name: "AI Integration", category: "specialty", proficiency: 90 },
   { id: "backend", name: "Backend Systems", category: "specialty", proficiency: 91 },
-  { id: "mobile", name: "Mobile Development", category: "specialty", proficiency: 85 },
+  { id: "mobile", name: "Mobile Dev", category: "specialty", proficiency: 85 },
   { id: "ios", name: "iOS", category: "specialty", proficiency: 80 },
   { id: "cicd", name: "CI/CD", category: "specialty", proficiency: 88 },
   { id: "pytest", name: "PyTest", category: "framework", proficiency: 90 },

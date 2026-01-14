@@ -1,18 +1,16 @@
 .skill-connector-svg {
   overflow: visible;
+  /* Use GPU acceleration */
+  will-change: contents;
 }
 
-/* Animated path drawing effect - use large dash values to ensure full path is drawn */
+/* Animated path drawing effect */
 .connector-path {
-  stroke-dasharray: 5000;
-  stroke-dashoffset: 5000;
-  animation: draw-path 1.5s ease-out forwards, pulse-line 2s ease-in-out infinite 1.5s;
-}
-
-.connector-path-glow {
-  stroke-dasharray: 5000;
-  stroke-dashoffset: 5000;
-  animation: draw-path 1.5s ease-out forwards, glow-pulse 2s ease-in-out infinite 1.5s;
+  stroke-dasharray: 10000;
+  stroke-dashoffset: 10000;
+  animation: draw-path 1s ease-out forwards;
+  /* GPU acceleration for the filter */
+  will-change: stroke-dashoffset;
 }
 
 @keyframes draw-path {
@@ -21,29 +19,8 @@
   }
 }
 
-@keyframes pulse-line {
-  0%, 100% {
-    opacity: 0.8;
-    stroke-width: 3;
-  }
-  50% {
-    opacity: 1;
-    stroke-width: 4;
-  }
-}
-
-@keyframes glow-pulse {
-  0%, 100% {
-    opacity: 0.3;
-    stroke-width: 5;
-  }
-  50% {
-    opacity: 0.5;
-    stroke-width: 6;
-  }
-}
-
 /* Traveling dot - starts hidden, SVG animate controls visibility */
 .connector-dot {
   opacity: 0;
+  will-change: transform;
 }

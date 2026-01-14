@@ -254,42 +254,113 @@ export function SkillConnectorLines() {
   const dotsSvgContent = useMemo(() => {
     if (paths.length === 0) return null;
     
-    return paths.map((path) => (
-      <g key={path.id}>
-        <path
-          id={`motion-${path.id}`}
-          d={path.pathD}
-          fill="none"
-          stroke="none"
-        />
-        
-        <circle
-          r="6"
-          fill={path.color}
-          className="connector-dot"
-          style={{
-            filter: `drop-shadow(0 0 4px ${path.color})`,
-          }}
-        >
-          <animateMotion
-            dur="2s"
-            repeatCount="indefinite"
-            begin={`${path.delay + 0.3}s`}
-            fill="freeze"
-          >
-            <mpath xlinkHref={`#motion-${path.id}`} />
-          </animateMotion>
-          <animate
-            attributeName="opacity"
-            from="0"
-            to="1"
-            dur="0.2s"
-            begin={`${path.delay + 0.3}s`}
-            fill="freeze"
+    const travelDuration = 2; // seconds for dot to travel the path
+    
+    return paths.map((path) => {
+      const startTime = path.delay + 0.3;
+      
+      return (
+        <g key={path.id}>
+          {/* Hidden path for motion */}
+          <path
+            id={`motion-${path.id}`}
+            d={path.pathD}
+            fill="none"
+            stroke="none"
           />
-        </circle>
-      </g>
-    ));
+          
+          {/* Traveling dot */}
+          <circle
+            r="6"
+            fill={path.color}
+            className="connector-dot"
+            style={{
+              filter: `drop-shadow(0 0 4px ${path.color})`,
+            }}
+          >
+            {/* Motion along the path */}
+            <animateMotion
+              dur={`${travelDuration}s`}
+              repeatCount="indefinite"
+              begin={`${startTime}s`}
+              fill="freeze"
+            >
+              <mpath xlinkHref={`#motion-${path.id}`} />
+            </animateMotion>
+            {/* Initial fade in */}
+            <animate
+              attributeName="opacity"
+              from="0"
+              to="1"
+              dur="0.2s"
+              begin={`${startTime}s`}
+              fill="freeze"
+            />
+            {/* Shrink as dot arrives (absorption effect) - starts at 95%, gone by 100% */}
+            <animate
+              attributeName="r"
+              values="6;6;6;0;6"
+              keyTimes="0;0.05;0.95;1;1"
+              dur={`${travelDuration}s`}
+              repeatCount="indefinite"
+              begin={`${startTime}s`}
+            />
+            {/* Fade out as dot arrives */}
+            <animate
+              attributeName="opacity"
+              values="1;1;1;0;1"
+              keyTimes="0;0.05;0.95;1;1"
+              dur={`${travelDuration}s`}
+              repeatCount="indefinite"
+              begin={`${startTime}s`}
+            />
+          </circle>
+          
+          {/* Border color flash at connection point - synced to dot arrival */}
+          <line
+            x1={path.endX}
+            y1={path.endY}
+            x2={path.endX}
+            y2={path.endY}
+            stroke={path.color}
+            strokeWidth="3"
+            strokeLinecap="round"
+            opacity="0"
+            style={{
+              filter: `drop-shadow(0 0 10px ${path.color})`,
+            }}
+          >
+            {/* Flash when dot arrives - fade out wraps into next cycle */}
+            <animate
+              attributeName="opacity"
+              values="0.5;0;0;1;0.7"
+              keyTimes="0;0.15;0.98;0.99;1"
+              dur={`${travelDuration}s`}
+              repeatCount="indefinite"
+              begin={`${startTime}s`}
+            />
+            {/* Spread left - reset at start, spread at end */}
+            <animate
+              attributeName="x1"
+              values={`${path.endX - 50};${path.endX};${path.endX};${path.endX - 30}`}
+              keyTimes="0;0.15;0.98;1"
+              dur={`${travelDuration}s`}
+              repeatCount="indefinite"
+              begin={`${startTime}s`}
+            />
+            {/* Spread right - reset at start, spread at end */}
+            <animate
+              attributeName="x2"
+              values={`${path.endX + 50};${path.endX};${path.endX};${path.endX + 30}`}
+              keyTimes="0;0.15;0.98;1"
+              dur={`${travelDuration}s`}
+              repeatCount="indefinite"
+              begin={`${startTime}s`}
+            />
+          </line>
+        </g>
+      );
+    });
   }, [paths]);
 
   if (paths.length === 0) return null;

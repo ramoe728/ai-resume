@@ -8,7 +8,7 @@ import './SkillBubbles.css';
 
 // Category colors
 const categoryColors: Record<string, string> = {
-  language: '#6C63FF',
+  language: '#A78BFA',
   framework: '#00D9FF',
   cloud: '#FF6B6B',
   database: '#4ECB71',

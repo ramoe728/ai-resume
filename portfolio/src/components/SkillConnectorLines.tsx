@@ -28,12 +28,12 @@ function hashString(str: string): number {
   return Math.abs(hash);
 }
 
-// Get one of 5 evenly spaced connection points along the top of a card
+// Get one of 15 evenly spaced connection points along the top of a card
 function getConnectionPoint(cardRect: DOMRect, pathId: string): number {
   const padding = cardRect.width * 0.1;
   const usableWidth = cardRect.width - (padding * 2);
-  const spacing = usableWidth / 4;
-  const spotIndex = hashString(pathId) % 5;
+  const spacing = usableWidth / 14; // 14 gaps between 15 points
+  const spotIndex = hashString(pathId) % 15;
   return cardRect.left + padding + (spacing * spotIndex);
 }
 
@@ -48,12 +48,44 @@ interface ConnectionPath {
   pathD: string; // Pre-computed path string
 }
 
-// Generate a curved path with some meander
+// Generate a PCB-style path with straight lines and 45-degree angles
 function generatePathD(startX: number, startY: number, endX: number, endY: number): string {
-  const midY = startY + (endY - startY) * 0.5;
-  const controlOffset = (endX - startX) * 0.3;
+  const dx = endX - startX; // horizontal distance to travel
+  const dy = endY - startY; // total vertical distance
   
-  return `M ${startX} ${startY} C ${startX} ${startY + 50}, ${startX + controlOffset} ${midY - 50}, ${startX + (endX - startX) * 0.5} ${midY} S ${endX - controlOffset} ${endY - 100}, ${endX} ${endY}`;
+  // Direction of horizontal travel: 1 for right, -1 for left
+  const direction = dx >= 0 ? 1 : -1;
+  const horizontalDistance = Math.abs(dx);
+  
+  // For 45-degree travel, horizontal and vertical movement are equal
+  const diagonalVerticalTravel = horizontalDistance;
+  
+  // Minimum straight segments before/after diagonal
+  const minTopSegment = 40;
+  const minBottomSegment = 60;
+  
+  // Check if we have enough vertical space for proper routing
+  const availableForDiagonal = dy - minTopSegment - minBottomSegment;
+  
+  if (availableForDiagonal < diagonalVerticalTravel || horizontalDistance < 10) {
+    // Not enough room for nice 45-degree routing, use a simpler path
+    // Go straight down, then diagonal at the end
+    const simpleDropY = startY + dy * 0.7;
+    return `M ${startX} ${startY} L ${startX} ${simpleDropY} L ${endX} ${endY}`;
+  }
+  
+  // PCB-style routing:
+  // 1. Go straight down from start
+  // 2. Turn 45° toward destination (chamfer)
+  // 3. Travel diagonally
+  // 4. Turn 45° back to vertical (chamfer)
+  // 5. Go straight down to end
+  
+  const y1 = startY + minTopSegment; // End of first vertical segment
+  const y2 = y1 + diagonalVerticalTravel; // End of diagonal segment
+  
+  // Build the path with straight line segments
+  return `M ${startX} ${startY} L ${startX} ${y1} L ${endX} ${y2} L ${endX} ${endY}`;
 }
 
 export function SkillConnectorLines() {

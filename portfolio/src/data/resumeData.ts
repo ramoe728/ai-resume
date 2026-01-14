@@ -37,6 +37,18 @@ export interface ProfileData {
   summary: string;
 }
 
+export interface Recommendation {
+  id: string;
+  name: string;
+  role: string; // Their role/title, e.g., "Software Developer in Test"
+  affiliation: string; // Company where you worked together
+  phone?: string;
+  email?: string;
+  linkedIn?: string;
+  photoUrl?: string;
+  text: string;
+}
+
 export const profile: ProfileData = {
   name: "Ryan Moe",
   title: "Principle Engineer",
@@ -214,3 +226,39 @@ export const aiKnowledgeBase = {
     who elevates team capabilities while delivering his own high-quality work.`
   }
 };
+
+export const recommendations: Recommendation[] = [
+  {
+    id: "micah-kelly",
+    name: "Micah Kelly",
+    role: "Staff Software Engineer in Test",
+    affiliation: "Vivint",
+    photo: "/micah-profile.jpeg",
+    text: `I'm happy to recommend Ryan Moe, a Senior Software Engineer in Test whom I had the pleasure of working with closely.
+
+Ryan is a thoughtful, intelligent, and highly communicative engineer. We collaborated across multiple initiatives, regularly discussing strategy, planning work, and aligning on execution. When challenges arose—as they inevitably do in complex technical environments—Ryan was always open to sharing ideas, working through problems collaboratively, and finding practical solutions.
+
+His code was consistently clean, well-structured, and clearly thought out. One of Ryan's strongest qualities is how he receives feedback: he is never defensive, listens carefully, and is quick to make adjustments after discussion. When he disagreed with a suggestion, he approached it constructively—offering reasonable alternatives and then implementing changes quickly and effectively once a path was agreed upon.
+
+Ryan also excelled at automating difficult and complex tests. He regularly built sophisticated fixtures and environments to ensure test execution was reliable and repeatable, even under challenging conditions. His work significantly improved the robustness and confidence of our test coverage.
+
+Because of these qualities, Ryan was one of my favorite engineers to work with. I would confidently and happily recommend him for any key technical role, especially those requiring strong collaboration, sound judgment, and deep technical skill.`
+  },
+  {
+    id: "hayden-randall",
+    name: "Hayden Randall",
+    role: "Software Developer in Test",
+    affiliation: "Vivint",
+    photo: "/hayden-profile.jpeg",
+    phone: "(480) 625-6584",
+    text: `I'm writing to recommend my former coworker, Ryan Moe. I had the chance to work closely with Ryan, and he was consistently one of the most reliable people on our team.
+
+Ryan was always willing to help, no matter how busy he was. If he didn't know the answer to something, he would take the initiative to find someone who did and make sure the issue was resolved. That level of effort really stood out and made him a go-to resource for the team.
+
+He was also one of our subject matter experts, and people regularly went to him for guidance. Ryan approached problems calmly and logically, and he delivered his work on time and with a high level of quality.
+
+On top of his technical skills, Ryan was just a great person to work with. He communicated clearly, stayed dependable under pressure, and made the work environment better.
+
+I have no hesitation recommending Ryan. Any team would benefit from having someone like him.`
+  },
+];

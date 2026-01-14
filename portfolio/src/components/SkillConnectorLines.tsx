@@ -46,15 +46,13 @@ interface ConnectionPath {
   endY: number;
   delay: number;
   pathD: string; // Pre-computed path string
+  isExiting?: boolean; // True when path is animating out
 }
 
 // Generate a PCB-style path with straight lines and 45-degree angles
 function generatePathD(startX: number, startY: number, endX: number, endY: number): string {
   const dx = endX - startX; // horizontal distance to travel
   const dy = endY - startY; // total vertical distance
-  
-  // Direction of horizontal travel: 1 for right, -1 for left
-  const direction = dx >= 0 ? 1 : -1;
   const horizontalDistance = Math.abs(dx);
   
   // For 45-degree travel, horizontal and vertical movement are equal
@@ -91,14 +89,42 @@ function generatePathD(startX: number, startY: number, endX: number, endY: numbe
 export function SkillConnectorLines() {
   const { activeSkills } = useHighlight();
   const [paths, setPaths] = useState<ConnectionPath[]>([]);
+  const [exitingPaths, setExitingPaths] = useState<ConnectionPath[]>([]);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const isCalculating = useRef(false);
+  const prevActiveSkillsRef = useRef<string[]>([]);
 
   // Calculate paths between skill bubbles and experience cards
   const calculatePaths = useCallback(() => {
     // Prevent concurrent calculations
     if (isCalculating.current) return;
     isCalculating.current = true;
+
+    // Check if skills were deactivated
+    const prevSkills = prevActiveSkillsRef.current;
+    const deactivatedSkills = prevSkills.filter(s => !activeSkills.includes(s));
+    
+    if (deactivatedSkills.length > 0 && paths.length > 0) {
+      // Find paths for deactivated skills and mark them as exiting
+      const pathsToExit = paths.filter(p => 
+        deactivatedSkills.some(skill => 
+          p.id.toLowerCase().startsWith(sanitizeId(skill))
+        )
+      ).map(p => ({ ...p, isExiting: true }));
+      
+      if (pathsToExit.length > 0) {
+        setExitingPaths(prev => [...prev, ...pathsToExit]);
+        
+        // Remove exiting paths after animation completes (1s)
+        setTimeout(() => {
+          setExitingPaths(prev => 
+            prev.filter(ep => !pathsToExit.some(pte => pte.id === ep.id))
+          );
+        }, 1000);
+      }
+    }
+    
+    prevActiveSkillsRef.current = [...activeSkills];
 
     if (activeSkills.length === 0) {
       setPaths([]);
@@ -240,14 +266,17 @@ export function SkillConnectorLines() {
     };
   }, [activeSkills.length, calculatePaths]);
 
+  // Combine active paths and exiting paths for rendering
+  const allPaths = useMemo(() => [...paths, ...exitingPaths], [paths, exitingPaths]);
+
   // Memoize the SVG content to prevent unnecessary re-renders
   const linesSvgContent = useMemo(() => {
-    if (paths.length === 0) return null;
+    if (allPaths.length === 0) return null;
     
     return (
       <>
         <defs>
-          {paths.map((path) => (
+          {allPaths.map((path) => (
             <linearGradient
               key={`gradient-${path.id}`}
               id={`gradient-${path.id}`}
@@ -263,7 +292,7 @@ export function SkillConnectorLines() {
           ))}
         </defs>
 
-        {paths.map((path) => (
+        {allPaths.map((path) => (
           <path
             key={path.id}
             d={path.pathD}
@@ -271,16 +300,16 @@ export function SkillConnectorLines() {
             stroke={`url(#gradient-${path.id})`}
             strokeWidth="3"
             strokeLinecap="round"
-            className="connector-path"
+            className={path.isExiting ? 'connector-path-exit' : 'connector-path'}
             style={{
-              animationDelay: `${path.delay}s`,
+              animationDelay: path.isExiting ? '0s' : `${path.delay}s`,
               filter: `drop-shadow(0 0 6px ${path.color})`,
             }}
           />
         ))}
       </>
     );
-  }, [paths]);
+  }, [allPaths]);
 
   const dotsSvgContent = useMemo(() => {
     if (paths.length === 0) return null;

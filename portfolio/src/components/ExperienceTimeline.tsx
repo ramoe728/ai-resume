@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Calendar, ChevronRight } from 'lucide-react';
 import { experiences, skills } from '../data/resumeData';
@@ -30,18 +30,26 @@ interface ExperienceCardProps {
   index: number;
   isHighlighted: boolean;
   isActive: boolean;
-  activeSkill: string | null;
+  activeSkills: string[];
   onHover: (id: string | null) => void;
 }
 
-function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkill, onHover }: ExperienceCardProps) {
+function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkills, onHover }: ExperienceCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  // Check if a skill tag matches the active skill
+  // Auto-expand when card becomes highlighted due to skill selection
+  useEffect(() => {
+    if (isHighlighted && activeSkills.length > 0) {
+      setIsExpanded(true);
+    }
+  }, [isHighlighted, activeSkills.length]);
+  
+  // Check if a skill tag matches any of the active skills (exact match)
   const isSkillActive = (skillName: string): boolean => {
-    if (!activeSkill) return false;
-    return skillName.toLowerCase().includes(activeSkill.toLowerCase()) ||
-           activeSkill.toLowerCase().includes(skillName.toLowerCase());
+    if (activeSkills.length === 0) return false;
+    return activeSkills.some(activeSkill =>
+      skillName.toLowerCase() === activeSkill.toLowerCase()
+    );
   };
   
   // Get the color for a skill tag
@@ -151,7 +159,7 @@ function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkil
 }
 
 export function ExperienceTimeline() {
-  const { highlightedExperiences, activeSkill, setActiveExperience } = useHighlight();
+  const { highlightedExperiences, activeSkills, setActiveExperience } = useHighlight();
   const [hoveredExperience, setHoveredExperience] = useState<string | null>(null);
 
   const handleHover = (id: string | null) => {
@@ -159,15 +167,19 @@ export function ExperienceTimeline() {
     setActiveExperience(id);
   };
 
-  // Find experiences that use the active skill
-  const getExperiencesForSkill = (skillName: string | null) => {
-    if (!skillName) return [];
+  // Find experiences that use any of the active skills (exact match)
+  const getExperiencesForSkills = (skillNames: string[]) => {
+    if (skillNames.length === 0) return [];
     return experiences
-      .filter(exp => exp.skills.some(s => s.toLowerCase().includes(skillName.toLowerCase())))
+      .filter(exp => exp.skills.some(expSkill => 
+        skillNames.some(skillName =>
+          expSkill.toLowerCase() === skillName.toLowerCase()
+        )
+      ))
       .map(exp => exp.id);
   };
 
-  const skillRelatedExperiences = getExperiencesForSkill(activeSkill);
+  const skillRelatedExperiences = getExperiencesForSkills(activeSkills);
 
   return (
     <section className="experience-section" id="experience">
@@ -192,7 +204,7 @@ export function ExperienceTimeline() {
               skillRelatedExperiences.includes(exp.id)
             }
             isActive={hoveredExperience === exp.id}
-            activeSkill={activeSkill}
+            activeSkills={activeSkills}
             onHover={handleHover}
           />
         ))}

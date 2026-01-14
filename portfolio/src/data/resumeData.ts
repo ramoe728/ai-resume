@@ -70,7 +70,7 @@ export const experiences: Experience[] = [
       "Built end-to-end, a HIPAA-compliant, quantum-resistant, encrypted social networking platform utilizing patented security architecture for long-term quantum resilience",
       "Developed and tested AI Paralegal agent that performed as a personal injury law paralegal. Capabilities included client communication, document management, scheduling, and medical coordination"
     ],
-    skills: ["TypeScript", "React", "React Native", "iOS", "Mobile Development", "Firebase", "NoSQL", "Post-quantum Encryption", "AI Integration", "Backend Systems", "Azure"],
+    skills: ["JavaScript", "React", "React Native", "iOS", "Mobile Development", "Firebase", "Postgres", "NoSQL", "Post-quantum Encryption", "AI Integration", "Backend Systems", "Azure"],
     description: "Leading the development of a cutting-edge social networking platform with military-grade encryption and AI-powered legal assistance tools."
   },
   {
@@ -79,7 +79,7 @@ export const experiences: Experience[] = [
     company: "Vivint",
     location: "Lehi, UT",
     startDate: "2023",
-    endDate: "Present",
+    endDate: "2026",
     highlights: [
       "Collaborated and architected the migration of CI/CD automation pipeline to a custom-built test scheduler, resulting in a 30% improvement in regression test performance",
       "Developed a firmware version handler solution for test setup, which allowed tests to bypass irrelevant OTA dependencies. Resulting 20% improvement in automation test success rates"
@@ -98,7 +98,7 @@ export const experiences: Experience[] = [
       "Designed and implemented test automation with a notification system for a PaaS product, causing a shift from reactive, manual QA to proactive, autonomous QA, resulting 240% faster bug discovery",
       "Achieved a 99.6% reduction in monthly automation resource spending by re-architecting the automation system to utilize self-hosted runners"
     ],
-    skills: ["JavaScript", "Python", "PyTest", "Playwright", "Test Automation", "Azure", "Postgres"],
+    skills: ["JavaScript", "TypeScript", "Python", "PyTest", "Playwright", "Test Automation", "Azure", "Postgres"],
     description: "Transformed QA processes through intelligent automation and significant cost optimization."
   },
   {

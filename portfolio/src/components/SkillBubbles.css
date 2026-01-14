@@ -101,6 +101,36 @@
   word-break: break-word;
 }
 
+/* Clear all button */
+.clear-all-bubble {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgba(128, 128, 128, 0.3),
+    rgba(100, 100, 100, 0.15)
+  );
+  border: 2px solid rgba(150, 150, 150, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+}
+
+.clear-all-bubble:hover {
+  border-color: rgba(200, 200, 200, 0.8);
+  background: linear-gradient(
+    145deg,
+    rgba(150, 150, 150, 0.4),
+    rgba(120, 120, 120, 0.2)
+  );
+  color: var(--text-primary);
+  box-shadow: 0 0 15px rgba(150, 150, 150, 0.3);
+}
+
 .skill-legend {
   display: flex;
   justify-content: center;

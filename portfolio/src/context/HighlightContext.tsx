@@ -3,14 +3,15 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 interface HighlightState {
   highlightedSkills: string[];
   highlightedExperiences: string[];
-  activeSkill: string | null;
+  activeSkills: string[];
   activeExperience: string | null;
 }
 
 interface HighlightContextType extends HighlightState {
   setHighlightedSkills: (skills: string[]) => void;
   setHighlightedExperiences: (experiences: string[]) => void;
-  setActiveSkill: (skill: string | null) => void;
+  toggleActiveSkill: (skill: string) => void;
+  setActiveSkills: (skills: string[]) => void;
   setActiveExperience: (experience: string | null) => void;
   highlightFromAI: (skills: string[], experiences: string[]) => void;
   clearHighlights: () => void;
@@ -21,8 +22,17 @@ const HighlightContext = createContext<HighlightContextType | undefined>(undefin
 export function HighlightProvider({ children }: { children: ReactNode }) {
   const [highlightedSkills, setHighlightedSkills] = useState<string[]>([]);
   const [highlightedExperiences, setHighlightedExperiences] = useState<string[]>([]);
-  const [activeSkill, setActiveSkill] = useState<string | null>(null);
+  const [activeSkills, setActiveSkills] = useState<string[]>([]);
   const [activeExperience, setActiveExperience] = useState<string | null>(null);
+
+  // Toggle a skill in/out of the active skills array
+  const toggleActiveSkill = useCallback((skill: string) => {
+    setActiveSkills(prev => 
+      prev.includes(skill) 
+        ? prev.filter(s => s !== skill)
+        : [...prev, skill]
+    );
+  }, []);
 
   // Called by AI to highlight relevant items
   const highlightFromAI = useCallback((skills: string[], experiences: string[]) => {
@@ -33,7 +43,7 @@ export function HighlightProvider({ children }: { children: ReactNode }) {
   const clearHighlights = useCallback(() => {
     setHighlightedSkills([]);
     setHighlightedExperiences([]);
-    setActiveSkill(null);
+    setActiveSkills([]);
     setActiveExperience(null);
   }, []);
 
@@ -42,11 +52,12 @@ export function HighlightProvider({ children }: { children: ReactNode }) {
       value={{
         highlightedSkills,
         highlightedExperiences,
-        activeSkill,
+        activeSkills,
         activeExperience,
         setHighlightedSkills,
         setHighlightedExperiences,
-        setActiveSkill,
+        toggleActiveSkill,
+        setActiveSkills,
         setActiveExperience,
         highlightFromAI,
         clearHighlights,

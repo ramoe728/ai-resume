@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import { skills, experiences } from '../data/resumeData';
 import type { Skill } from '../data/resumeData';
 import { useHighlight } from '../context/HighlightContext';
@@ -66,10 +67,17 @@ function Bubble({ skill, index, isHighlighted, isActive, onClick }: BubbleProps)
 export function SkillBubbles() {
   const { 
     highlightedSkills, 
-    activeSkill, 
-    setActiveSkill, 
+    activeSkills, 
+    toggleActiveSkill,
+    setActiveSkills,
     setHighlightedExperiences 
   } = useHighlight();
+  
+  // Clear all active skills
+  const handleClearAll = () => {
+    setActiveSkills([]);
+    setHighlightedExperiences([]);
+  };
   
   const [filter, setFilter] = useState<string | null>(null);
   
@@ -87,17 +95,23 @@ export function SkillBubbles() {
     : skills;
   
   const handleBubbleClick = (skillName: string) => {
-    if (activeSkill === skillName) {
-      // Deselect
-      setActiveSkill(null);
+    // Toggle the skill in/out of active skills
+    toggleActiveSkill(skillName);
+    
+    // Update highlighted experiences based on all active skills after toggle
+    const newActiveSkills = activeSkills.includes(skillName)
+      ? activeSkills.filter(s => s !== skillName)
+      : [...activeSkills, skillName];
+    
+    if (newActiveSkills.length === 0) {
       setHighlightedExperiences([]);
     } else {
-      // Select and highlight related experiences
-      setActiveSkill(skillName);
+      // Find experiences that match ANY of the active skills (exact match)
       const relatedExperiences = experiences
-        .filter(exp => exp.skills.some(s => 
-          s.toLowerCase().includes(skillName.toLowerCase()) ||
-          skillName.toLowerCase().includes(s.toLowerCase())
+        .filter(exp => exp.skills.some(expSkill => 
+          newActiveSkills.some(activeSkill =>
+            expSkill.toLowerCase() === activeSkill.toLowerCase()
+          )
         ))
         .map(exp => exp.id);
       setHighlightedExperiences(relatedExperiences);
@@ -154,10 +168,28 @@ export function SkillBubbles() {
               skill={skill}
               index={index}
               isHighlighted={isSkillHighlighted(skill.name)}
-              isActive={activeSkill === skill.name}
+              isActive={activeSkills.includes(skill.name)}
               onClick={() => handleBubbleClick(skill.name)}
             />
           ))}
+          
+          {/* Clear all button - appears when skills are selected */}
+          <AnimatePresence>
+            {activeSkills.length > 0 && (
+              <motion.div
+                className="clear-all-bubble"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                whileHover={{ scale: 1.1 }}
+                onClick={handleClearAll}
+                title="Clear all selected skills"
+              >
+                <X size={24} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
       

@@ -32,9 +32,10 @@ interface ExperienceCardProps {
   isActive: boolean;
   activeSkills: string[];
   onHover: (id: string | null) => void;
+  onSkillClick: (skillName: string) => void;
 }
 
-function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkills, onHover }: ExperienceCardProps) {
+function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkills, onHover, onSkillClick }: ExperienceCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
   // Auto-expand when card becomes highlighted due to skill selection
@@ -132,18 +133,25 @@ function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkil
                 <h4>Technologies Used</h4>
                 <div className="skill-tags">
                   {experience.skills.map((skill, i) => {
-                    const isActive = isSkillActive(skill);
+                    const isActiveSkill = isSkillActive(skill);
                     const skillColor = getSkillColor(skill);
                     return (
                       <motion.span
                         key={skill}
-                        className={`skill-tag ${isActive ? 'skill-tag-active' : ''}`}
+                        className={`skill-tag ${isActiveSkill ? 'skill-tag-active' : ''}`}
                         style={{
                           '--skill-color': skillColor,
+                          cursor: 'pointer',
                         } as React.CSSProperties}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.05 }}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent card expand/collapse
+                          onSkillClick(skill);
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                       >
                         {skill}
                       </motion.span>
@@ -160,12 +168,41 @@ function ExperienceCard({ experience, index, isHighlighted, isActive, activeSkil
 }
 
 export function ExperienceTimeline() {
-  const { highlightedExperiences, activeSkills, setActiveExperience } = useHighlight();
+  const { 
+    highlightedExperiences, 
+    activeSkills, 
+    setActiveExperience,
+    toggleActiveSkill,
+    setHighlightedExperiences
+  } = useHighlight();
   const [hoveredExperience, setHoveredExperience] = useState<string | null>(null);
 
   const handleHover = (id: string | null) => {
     setHoveredExperience(id);
     setActiveExperience(id);
+  };
+
+  // Handle skill tag click - toggle skill and update highlighted experiences
+  const handleSkillClick = (skillName: string) => {
+    toggleActiveSkill(skillName);
+    
+    // Calculate new active skills after toggle
+    const newActiveSkills = activeSkills.includes(skillName)
+      ? activeSkills.filter(s => s !== skillName)
+      : [...activeSkills, skillName];
+    
+    if (newActiveSkills.length === 0) {
+      setHighlightedExperiences([]);
+    } else {
+      const relatedExperiences = experiences
+        .filter(exp => exp.skills.some(expSkill => 
+          newActiveSkills.some(activeSkill =>
+            expSkill.toLowerCase() === activeSkill.toLowerCase()
+          )
+        ))
+        .map(exp => exp.id);
+      setHighlightedExperiences(relatedExperiences);
+    }
   };
 
   // Find experiences that use any of the active skills (exact match)
@@ -207,6 +244,7 @@ export function ExperienceTimeline() {
             isActive={hoveredExperience === exp.id}
             activeSkills={activeSkills}
             onHover={handleHover}
+            onSkillClick={handleSkillClick}
           />
         ))}
       </div>

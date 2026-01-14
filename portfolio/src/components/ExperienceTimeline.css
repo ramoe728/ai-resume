@@ -200,7 +200,13 @@
   font-size: 0.8rem;
   font-weight: 500;
   border: 1px solid rgba(108, 99, 255, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.skill-tag:hover {
+  background: rgba(108, 99, 255, 0.2);
+  border-color: rgba(108, 99, 255, 0.4);
 }
 
 .skill-tag-active {

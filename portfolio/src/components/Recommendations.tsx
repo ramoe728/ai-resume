@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Phone, Mail, Linkedin, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Mail, Linkedin, User } from 'lucide-react';
 import { recommendations } from '../data/resumeData';
 import type { Recommendation } from '../data/resumeData';
 import './Recommendations.css';
@@ -59,15 +59,9 @@ function RecommendationCard({ recommendation, index }: RecommendationCardProps) 
         )}
       </div>
 
-      {/* Contact info */}
-      {(recommendation.phone || recommendation.email || recommendation.linkedIn) && (
+      {/* Contact info - phone numbers hidden for privacy */}
+      {(recommendation.email || recommendation.linkedIn) && (
         <div className="recommendation-contact">
-          {recommendation.phone && (
-            <a href={`tel:${recommendation.phone}`} className="contact-link">
-              <Phone size={14} />
-              <span>{recommendation.phone}</span>
-            </a>
-          )}
           {recommendation.email && (
             <a href={`mailto:${recommendation.email}`} className="contact-link">
               <Mail size={14} />

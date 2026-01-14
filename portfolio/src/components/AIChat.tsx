@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, X, Sparkles, User } from 'lucide-react';
 import { useHighlight } from '../context/HighlightContext';
-import { profile, experiences, skills, aiKnowledgeBase } from '../data/resumeData';
 import './AIChat.css';
 
 interface Message {
@@ -13,117 +12,26 @@ interface Message {
   relatedExperiences?: string[];
 }
 
-// Simple AI response generator based on keywords
-function generateAIResponse(query: string): { 
-  content: string; 
-  skills: string[]; 
-  experiences: string[] 
-} {
-  const lowerQuery = query.toLowerCase();
-  
-  // Check for specific topics
-  if (lowerQuery.includes('encryption') || lowerQuery.includes('security') || lowerQuery.includes('quantum')) {
-    return {
-      content: `Ryan has deep expertise in post-quantum encryption and security. At Visyfy, he built a HIPAA-compliant, quantum-resistant social networking platform using patented security architecture. This forward-thinking approach ensures the platform remains secure even as quantum computers become more powerful. His work demonstrates both technical depth and strategic thinking about long-term security challenges.`,
-      skills: ['Post-quantum Encryption', 'HIPAA Compliance', 'TypeScript', 'Azure'],
-      experiences: ['visyfy']
-    };
+interface ChatApiResponse {
+  content: string;
+  skills: string[];
+  experiences: string[];
+}
+
+async function callChatApi(messages: { role: string; content: string }[]): Promise<ChatApiResponse> {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ messages }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get AI response');
   }
-  
-  if (lowerQuery.includes('ai') || lowerQuery.includes('machine learning') || lowerQuery.includes('agent')) {
-    return {
-      content: `Ryan has hands-on experience building AI-powered applications. At Visyfy, he developed an AI Paralegal agent that handles client communication, document management, scheduling, and medical coordination for personal injury law firms. This project showcases his ability to integrate AI into practical, real-world applications that deliver measurable value.`,
-      skills: ['AI Integration', 'Python', 'Backend Systems'],
-      experiences: ['visyfy']
-    };
-  }
-  
-  if (lowerQuery.includes('automation') || lowerQuery.includes('testing') || lowerQuery.includes('qa')) {
-    return {
-      content: `Test automation is one of Ryan's core strengths. At Optilogic, he achieved a remarkable 99.6% reduction in automation costs while simultaneously improving bug discovery speed by 240%. At Vivint, he architected CI/CD improvements that delivered 30% better regression test performance. His approach transforms testing from a bottleneck into a competitive advantage.`,
-      skills: ['Test Automation', 'CI/CD', 'Python', 'Docker'],
-      experiences: ['optilogic', 'vivint']
-    };
-  }
-  
-  if (lowerQuery.includes('cost') || lowerQuery.includes('savings') || lowerQuery.includes('optimization')) {
-    return {
-      content: `Ryan has a proven track record of delivering massive cost optimizations. His most impressive achievement was a 99.6% reduction in monthly automation resource spending at Optilogic—achieved by re-architecting the system to use self-hosted runners. This wasn't just cost-cutting; it was a fundamental improvement to the system's architecture.`,
-      skills: ['AWS', 'GCP', 'Test Automation', 'Backend Systems'],
-      experiences: ['optilogic']
-    };
-  }
-  
-  if (lowerQuery.includes('cloud') || lowerQuery.includes('aws') || lowerQuery.includes('azure') || lowerQuery.includes('gcp')) {
-    return {
-      content: `Ryan has extensive experience across all major cloud platforms—Azure, AWS, and GCP. He's used these platforms for everything from hosting enterprise applications to building cost-effective automation infrastructure. His cloud expertise is paired with a focus on optimization, as demonstrated by his dramatic cost reductions at Optilogic.`,
-      skills: ['Azure', 'AWS', 'GCP', 'Docker'],
-      experiences: ['visyfy', 'optilogic', 'prior']
-    };
-  }
-  
-  if (lowerQuery.includes('frontend') || lowerQuery.includes('react') || lowerQuery.includes('javascript') || lowerQuery.includes('typescript')) {
-    return {
-      content: `Ryan is highly proficient in modern frontend development, particularly with React and TypeScript. At Visyfy, he built a complete end-to-end application including sophisticated frontend interfaces for their social networking platform. His JavaScript proficiency is at 97%, and he combines this with strong TypeScript skills to build type-safe, maintainable applications.`,
-      skills: ['JavaScript', 'TypeScript', 'React'],
-      experiences: ['visyfy']
-    };
-  }
-  
-  if (lowerQuery.includes('backend') || lowerQuery.includes('python') || lowerQuery.includes('database')) {
-    return {
-      content: `Ryan's backend expertise spans multiple languages and technologies. He's highly proficient in Python (89%) and has extensive experience with Postgres databases. His backend work includes building scalable APIs, automation systems, and AI integration layers. At Visyfy, he architected the entire backend for a HIPAA-compliant platform.`,
-      skills: ['Python', 'Backend Systems', 'Postgres', 'Docker'],
-      experiences: ['visyfy', 'vivint', 'optilogic']
-    };
-  }
-  
-  if (lowerQuery.includes('why') && lowerQuery.includes('hire')) {
-    return {
-      content: aiKnowledgeBase.interviewAnswers.whyHire,
-      skills: ['TypeScript', 'Python', 'Test Automation', 'AI Integration'],
-      experiences: ['visyfy', 'optilogic']
-    };
-  }
-  
-  if (lowerQuery.includes('strength') || lowerQuery.includes('best at')) {
-    return {
-      content: aiKnowledgeBase.interviewAnswers.strengths,
-      skills: ['Post-quantum Encryption', 'Test Automation', 'Backend Systems'],
-      experiences: ['visyfy', 'optilogic']
-    };
-  }
-  
-  if (lowerQuery.includes('experience') || lowerQuery.includes('background') || lowerQuery.includes('career')) {
-    return {
-      content: `Ryan has over 8 years of professional software engineering experience. He started his career at major defense contractors (Northrop Grumman, Raytheon) and tech companies (Smarter AI, Dyno Nobel), building a strong foundation in embedded systems and full-stack development. He then specialized in test automation at Optilogic and Vivint, before taking on his current role as Principle Engineer at Visyfy, where he works on cutting-edge security and AI technologies.`,
-      skills: ['JavaScript', 'Python', 'Backend Systems', 'C/C++'],
-      experiences: ['visyfy', 'vivint', 'optilogic', 'prior']
-    };
-  }
-  
-  if (lowerQuery.includes('education') || lowerQuery.includes('degree') || lowerQuery.includes('school')) {
-    return {
-      content: `Ryan holds a Bachelor of Science in Computer Engineering from Brigham Young University (2016-2019). This engineering background gives him a strong foundation in both hardware and software systems, which is evident in his embedded systems work and his deep understanding of system architecture.`,
-      skills: ['C/C++', 'Embedded Systems'],
-      experiences: ['prior']
-    };
-  }
-  
-  if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('hey')) {
-    return {
-      content: `Hello! I'm here to tell you about Ryan Moe, a Principle Engineer with 8+ years of experience. I can share details about his technical skills, work experience, achievements, and what makes him a great hire. What would you like to know?`,
-      skills: [],
-      experiences: []
-    };
-  }
-  
-  // Default response
-  return {
-    content: `${profile.name} is a ${profile.title} with ${profile.yearsExperience} of experience. ${profile.summary}\n\nFeel free to ask me about his technical skills, specific work experiences, achievements, or anything else you'd like to know!`,
-    skills: ['JavaScript', 'Python', 'React', 'Post-quantum Encryption'],
-    experiences: ['visyfy']
-  };
+
+  return response.json();
 }
 
 export function AIChat() {
@@ -137,6 +45,7 @@ export function AIChat() {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { highlightFromAI } = useHighlight();
 
@@ -150,7 +59,7 @@ export function AIChat() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -161,10 +70,15 @@ export function AIChat() {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
+    setError(null);
 
-    // Simulate AI thinking time
-    setTimeout(() => {
-      const response = generateAIResponse(userMessage.content);
+    try {
+      // Build conversation history for the API
+      const conversationHistory = [...messages, userMessage]
+        .filter(m => m.role === 'user' || m.role === 'assistant')
+        .map(m => ({ role: m.role, content: m.content }));
+
+      const response = await callChatApi(conversationHistory);
       
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -175,13 +89,25 @@ export function AIChat() {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
-      setIsTyping(false);
       
       // Highlight related items in the UI
       if (response.skills.length > 0 || response.experiences.length > 0) {
         highlightFromAI(response.skills, response.experiences);
       }
-    }, 800 + Math.random() * 700);
+    } catch (err) {
+      console.error('Chat error:', err);
+      setError('Failed to get a response. Please try again.');
+      
+      // Add error message to chat
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -281,6 +207,11 @@ export function AIChat() {
                   </div>
                 </motion.div>
               )}
+              {error && (
+                <div className="chat-error">
+                  {error}
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
 
@@ -291,8 +222,9 @@ export function AIChat() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about skills, experience..."
                 className="chat-input"
+                disabled={isTyping}
               />
-              <button type="submit" className="chat-send" disabled={!input.trim()}>
+              <button type="submit" className="chat-send" disabled={!input.trim() || isTyping}>
                 <Send size={18} />
               </button>
             </form>

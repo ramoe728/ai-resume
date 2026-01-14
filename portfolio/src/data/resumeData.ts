@@ -52,12 +52,12 @@ export interface Recommendation {
 export const profile: ProfileData = {
   name: "Ryan Moe",
   title: "Principle Engineer",
-  yearsExperience: "8+ Years",
+  yearsExperience: "9+ Years",
   phone: "801-671-9512",
   email: "ryanallenmoe@gmail.com",
   location: "Highland, UT",
   languages: ["English", "Japanese"],
-  summary: `Principle Engineer with over 8 years of experience building secure, scalable systems. 
+  summary: `Principle Engineer with over 9 years of experience building secure, scalable systems. 
   Specializing in end-to-end application development, AI integration, post-quantum encryption, 
   and test automation. Proven track record of delivering HIPAA-compliant solutions, 
   architecting CI/CD pipelines, and achieving significant cost reductions through intelligent automation.`
@@ -234,6 +234,7 @@ export const recommendations: Recommendation[] = [
     role: "Staff Software Engineer in Test",
     affiliation: "Vivint",
     photo: "/micah-profile.jpeg",
+    phone: "(801) 989-9323",
     text: `I'm happy to recommend Ryan Moe, a Senior Software Engineer in Test whom I had the pleasure of working with closely.
 
 Ryan is a thoughtful, intelligent, and highly communicative engineer. We collaborated across multiple initiatives, regularly discussing strategy, planning work, and aligning on execution. When challenges arose—as they inevitably do in complex technical environments—Ryan was always open to sharing ideas, working through problems collaboratively, and finding practical solutions.
@@ -251,6 +252,7 @@ Because of these qualities, Ryan was one of my favorite engineers to work with. 
     affiliation: "Vivint",
     photo: "/hayden-profile.jpeg",
     phone: "(480) 625-6584",
+    email: "haydenjrandall@gmail.com",
     text: `I'm writing to recommend my former coworker, Ryan Moe. I had the chance to work closely with Ryan, and he was consistently one of the most reliable people on our team.
 
 Ryan was always willing to help, no matter how busy he was. If he didn't know the answer to something, he would take the initiative to find someone who did and make sure the issue was resolved. That level of effort really stood out and made him a go-to resource for the team.
@@ -260,5 +262,27 @@ He was also one of our subject matter experts, and people regularly went to him 
 On top of his technical skills, Ryan was just a great person to work with. He communicated clearly, stayed dependable under pressure, and made the work environment better.
 
 I have no hesitation recommending Ryan. Any team would benefit from having someone like him.`
+  },
+  {
+    id: "jeremy-blair",
+    name: "Jeremy Blair",
+    role: "Principal Engineer",
+    affiliation: "Optilogic",
+    photo: "/jeremy-blair-profile.jpeg",
+    phone: "801-350-1712",
+    email: "jeremykblair@hotmail.com",
+    text: `I am pleased to write an employment letter of recommendation for Ryan Moe. I had the opportunity of working closely with Ryan for a period of about 9 months. During this time, I came to gain an appreciation for his ability to think in depth and at a higher level. There were several situations where Ryan uncovered problems within an application that were outside the scope of what he was asked to test. The reason he found those issues is because he asked questions that were deeper than the surface level information he was provided. He thinks like the engineer he is and knows how to solve problems.
+
+Ryan is friendly and communicates well. He is a great team player and is someone who understands code, regardless of the technology being used or the complexity of the algorithms he is reviewing.
+
+Ryan would make a great member of any technology team. He is a great developer and tester. I have no reservations about recommending him for any development related role. It was an honor and pleasure to work with him, and I hope our career paths cross again someday.`
+  },
+  {
+    id: "wyatt-penrod",
+    name: "Wyatt Penrod",
+    role: "Director of QA",
+    affiliation: "Vivint",
+    photo: "/vivint-logo.png",
+    text: `Ryan is the fastest hire to value that I've ever had.`
   },
 ];

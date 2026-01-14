@@ -28,12 +28,12 @@ function hashString(str: string): number {
   return Math.abs(hash);
 }
 
-// Get one of 15 evenly spaced connection points along the top of a card
+// Get one of 20 evenly spaced connection points along the top of a card
 function getConnectionPoint(cardRect: DOMRect, pathId: string): number {
   const padding = cardRect.width * 0.1;
   const usableWidth = cardRect.width - (padding * 2);
-  const spacing = usableWidth / 14; // 14 gaps between 15 points
-  const spotIndex = hashString(pathId) % 15;
+  const spacing = usableWidth / 19; // 19 gaps between 20 points
+  const spotIndex = hashString(pathId) % 20;
   return cardRect.left + padding + (spacing * spotIndex);
 }
 

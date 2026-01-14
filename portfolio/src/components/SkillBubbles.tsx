@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { X } from 'lucide-react';
 import { skills, experiences } from '../data/resumeData';
@@ -97,6 +97,57 @@ export function SkillBubbles() {
   const filteredSkills = filter 
     ? skills.filter(s => s.category === filter)
     : skills;
+
+  // Handle filter change - deactivate skills, apply filter, then reactivate visible skills
+  const handleFilterChange = useCallback((newFilter: string | null) => {
+    if (newFilter === filter) return; // No change
+    
+    if (activeSkills.length === 0) {
+      // No active skills, just apply the filter directly
+      setFilter(newFilter);
+      return;
+    }
+    
+    // Save currently active skills
+    const previouslyActiveSkills = [...activeSkills];
+    
+    // Deactivate all skills and clear highlights
+    setActiveSkills([]);
+    setHighlightedExperiences([]);
+    
+    // Apply the filter after a brief delay
+    setTimeout(() => {
+      setFilter(newFilter);
+      
+      // After filter is applied and layout settles, reactivate visible skills
+      setTimeout(() => {
+        // Get the skills that will be visible after the filter
+        const visibleSkills = newFilter
+          ? skills.filter(s => s.category === newFilter)
+          : skills;
+        
+        // Find which previously active skills are still visible
+        const skillsToReactivate = previouslyActiveSkills.filter(activeSkillName =>
+          visibleSkills.some(s => s.name === activeSkillName)
+        );
+        
+        if (skillsToReactivate.length > 0) {
+          // Reactivate the skills
+          setActiveSkills(skillsToReactivate);
+          
+          // Update highlighted experiences
+          const relatedExperiences = experiences
+            .filter(exp => exp.skills.some(expSkill => 
+              skillsToReactivate.some(activeSkill =>
+                expSkill.toLowerCase() === activeSkill.toLowerCase()
+              )
+            ))
+            .map(exp => exp.id);
+          setHighlightedExperiences(relatedExperiences);
+        }
+      }, 400); // Wait for layout animation
+    }, 50);
+  }, [filter, activeSkills, setActiveSkills, setHighlightedExperiences]);
   
   const handleBubbleClick = (skillName: string) => {
     // Toggle the skill in/out of active skills
@@ -153,7 +204,7 @@ export function SkillBubbles() {
           <button
             key={cat.id ?? 'all'}
             className={`filter-btn ${filter === cat.id ? 'active' : ''}`}
-            onClick={() => setFilter(cat.id)}
+            onClick={() => handleFilterChange(cat.id)}
             style={{
               '--filter-color': cat.id ? categoryColors[cat.id] : 'var(--accent-primary)'
             } as React.CSSProperties}

@@ -152,7 +152,7 @@ export function Recommendations() {
       {/* Scroll indicator dots */}
       {recommendations.length > 1 && (
         <div className="carousel-dots">
-          {recommendations.map((rec, index) => (
+          {recommendations.map((rec) => (
             <span key={rec.id} className="carousel-dot" />
           ))}
         </div>

@@ -45,7 +45,7 @@ export interface Recommendation {
   phone?: string;
   email?: string;
   linkedIn?: string;
-  photoUrl?: string;
+  photo?: string;
   text: string;
 }
 

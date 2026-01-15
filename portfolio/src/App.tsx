@@ -1,4 +1,3 @@
-import React from 'react';
 import { HighlightProvider } from './context/HighlightContext';
 import { Hero } from './components/Hero';
 import { SkillBubbles } from './components/SkillBubbles';

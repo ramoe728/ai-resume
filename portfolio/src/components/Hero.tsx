@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, FileDown } from 'lucide-react';
 import { profile, education } from '../data/resumeData';
 import './Hero.css';
 
@@ -80,6 +80,15 @@ export function Hero() {
               <MapPin size={18} />
               <span>{profile.location}</span>
             </div>
+            <a 
+              href="https://drive.google.com/uc?export=download&id=1406WoK-Z84UWhk1mdygm6pNxvvNpJxGt" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-item resume-download"
+            >
+              <FileDown size={18} />
+              <span>Resume</span>
+            </a>
           </motion.div>
           
           <motion.div

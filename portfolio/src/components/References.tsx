@@ -1,54 +1,54 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Mail, Linkedin, User } from 'lucide-react';
-import { recommendations } from '../data/resumeData';
-import type { Recommendation } from '../data/resumeData';
-import './Recommendations.css';
+import { references } from '../data/resumeData';
+import type { Reference } from '../data/resumeData';
+import './References.css';
 
-interface RecommendationCardProps {
-  recommendation: Recommendation;
+interface ReferenceCardProps {
+  reference: Reference;
   index: number;
 }
 
-function RecommendationCard({ recommendation, index }: RecommendationCardProps) {
+function ReferenceCard({ reference, index }: ReferenceCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const textPreviewLength = 300;
-  const needsTruncation = recommendation.text.length > textPreviewLength;
+  const needsTruncation = reference.text.length > textPreviewLength;
   
   const displayText = isExpanded || !needsTruncation
-    ? recommendation.text
-    : recommendation.text.slice(0, textPreviewLength) + '...';
+    ? reference.text
+    : reference.text.slice(0, textPreviewLength) + '...';
 
   return (
     <motion.div
-      className="recommendation-card"
+      className="reference-card"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
     >
       {/* Profile section */}
-      <div className="recommendation-header">
-        <div className="recommendation-photo">
-          {recommendation.photo ? (
-            <img src={recommendation.photo} alt={recommendation.name} />
+      <div className="reference-header">
+        <div className="reference-photo">
+          {reference.photo ? (
+            <img src={reference.photo} alt={reference.name} />
           ) : (
             <div className="photo-placeholder">
               <User size={32} />
             </div>
           )}
         </div>
-        <div className="recommendation-author">
-          <h4 className="author-name">{recommendation.name}</h4>
-          <p className="author-role">{recommendation.role}</p>
-          <p className="author-affiliation">{recommendation.affiliation}</p>
+        <div className="reference-author">
+          <h4 className="author-name">{reference.name}</h4>
+          <p className="author-role">{reference.role}</p>
+          <p className="author-affiliation">{reference.affiliation}</p>
         </div>
       </div>
 
       {/* Quote/Text section */}
-      <div className="recommendation-content">
+      <div className="reference-content">
         <span className="quote-mark">"</span>
-        <p className="recommendation-text">{displayText}</p>
+        <p className="reference-text">{displayText}</p>
         {needsTruncation && (
           <button 
             className="read-more-btn"
@@ -60,16 +60,16 @@ function RecommendationCard({ recommendation, index }: RecommendationCardProps) 
       </div>
 
       {/* Contact info - phone numbers hidden for privacy */}
-      {(recommendation.email || recommendation.linkedIn) && (
-        <div className="recommendation-contact">
-          {recommendation.email && (
-            <a href={`mailto:${recommendation.email}`} className="contact-link">
+      {(reference.email || reference.linkedIn) && (
+        <div className="reference-contact">
+          {reference.email && (
+            <a href={`mailto:${reference.email}`} className="contact-link">
               <Mail size={14} />
-              <span>{recommendation.email}</span>
+              <span>{reference.email}</span>
             </a>
           )}
-          {recommendation.linkedIn && (
-            <a href={recommendation.linkedIn} target="_blank" rel="noopener noreferrer" className="contact-link">
+          {reference.linkedIn && (
+            <a href={reference.linkedIn} target="_blank" rel="noopener noreferrer" className="contact-link">
               <Linkedin size={14} />
               <span>LinkedIn</span>
             </a>
@@ -80,7 +80,7 @@ function RecommendationCard({ recommendation, index }: RecommendationCardProps) 
   );
 }
 
-export function Recommendations() {
+export function References() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -103,14 +103,14 @@ export function Recommendations() {
   };
 
   return (
-    <section className="recommendations-section" id="recommendations">
+    <section className="references-section" id="references">
       <motion.div
         className="section-header"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <h2>Recommendations</h2>
+        <h2>References</h2>
         <p className="section-subtitle">What colleagues and managers have to say</p>
       </motion.div>
 
@@ -126,14 +126,14 @@ export function Recommendations() {
 
         {/* Cards container */}
         <div 
-          className="recommendations-carousel"
+          className="references-carousel"
           ref={scrollContainerRef}
           onScroll={updateScrollButtons}
         >
-          {recommendations.map((rec, index) => (
-            <RecommendationCard
-              key={rec.id}
-              recommendation={rec}
+          {references.map((ref, index) => (
+            <ReferenceCard
+              key={ref.id}
+              reference={ref}
               index={index}
             />
           ))}
@@ -150,10 +150,10 @@ export function Recommendations() {
       </div>
 
       {/* Scroll indicator dots */}
-      {recommendations.length > 1 && (
+      {references.length > 1 && (
         <div className="carousel-dots">
-          {recommendations.map((rec) => (
-            <span key={rec.id} className="carousel-dot" />
+          {references.map((ref) => (
+            <span key={ref.id} className="carousel-dot" />
           ))}
         </div>
       )}

@@ -37,7 +37,7 @@ export interface ProfileData {
   summary: string;
 }
 
-export interface Recommendation {
+export interface Reference {
   id: string;
   name: string;
   role: string; // Their role/title, e.g., "Software Developer in Test"
@@ -227,7 +227,7 @@ export const aiKnowledgeBase = {
   }
 };
 
-export const recommendations: Recommendation[] = [
+export const references: Reference[] = [
   {
     id: "micah-kelly",
     name: "Micah Kelly",

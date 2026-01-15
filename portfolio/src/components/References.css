@@ -1,14 +1,14 @@
-.recommendations-section {
+.references-section {
   padding: 4rem 0;
   overflow: hidden;
 }
 
-.recommendations-section .section-header {
+.references-section .section-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.recommendations-section .section-header h2 {
+.references-section .section-header h2 {
   font-family: var(--font-display);
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
@@ -18,7 +18,7 @@
   background-clip: text;
 }
 
-.recommendations-section .section-subtitle {
+.references-section .section-subtitle {
   color: var(--text-muted);
   font-size: 1rem;
 }
@@ -71,7 +71,7 @@
 }
 
 /* Cards carousel */
-.recommendations-carousel {
+.references-carousel {
   display: flex;
   gap: 1.5rem;
   overflow-x: auto;
@@ -81,12 +81,12 @@
   padding: 1rem 0.5rem;
 }
 
-.recommendations-carousel::-webkit-scrollbar {
+.references-carousel::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
 }
 
 /* Individual card - full width */
-.recommendation-card {
+.reference-card {
   flex: 0 0 100%;
   width: 100%;
   scroll-snap-align: start;
@@ -105,7 +105,7 @@
   position: relative;
 }
 
-.recommendation-card:hover {
+.reference-card:hover {
   border-color: var(--accent-primary);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.3),
@@ -114,13 +114,13 @@
 }
 
 /* Header with photo and name */
-.recommendation-header {
+.reference-header {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.recommendation-photo {
+.reference-photo {
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -129,7 +129,7 @@
   border: 2px solid var(--accent-primary);
 }
 
-.recommendation-photo img {
+.reference-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -145,7 +145,7 @@
   color: white;
 }
 
-.recommendation-author {
+.reference-author {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -173,7 +173,7 @@
 }
 
 /* Quote content */
-.recommendation-content {
+.reference-content {
   position: relative;
   flex: 1;
 }
@@ -190,7 +190,7 @@
   pointer-events: none;
 }
 
-.recommendation-text {
+.reference-text {
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--text-secondary);
@@ -216,7 +216,7 @@
 }
 
 /* Contact info */
-.recommendation-contact {
+.reference-contact {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -261,7 +261,7 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .recommendations-section {
+  .references-section {
     padding: 2rem 0;
   }
 
@@ -273,15 +273,15 @@
     display: none;
   }
 
-  .recommendation-card {
+  .reference-card {
     padding: 1.5rem;
   }
 
-  .recommendations-section .section-header h2 {
+  .references-section .section-header h2 {
     font-size: 2rem;
   }
 
-  .recommendation-photo {
+  .reference-photo {
     width: 56px;
     height: 56px;
   }

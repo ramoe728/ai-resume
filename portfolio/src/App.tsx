@@ -2,7 +2,7 @@ import { HighlightProvider } from './context/HighlightContext';
 import { Hero } from './components/Hero';
 import { SkillBubbles } from './components/SkillBubbles';
 import { ExperienceTimeline } from './components/ExperienceTimeline';
-import { Recommendations } from './components/Recommendations';
+import { References } from './components/References';
 import { SkillConnectorLines } from './components/SkillConnectorLines';
 import { AIChat } from './components/AIChat';
 import './App.css';
@@ -18,7 +18,7 @@ function App() {
           <div className="content-wrapper">
             <SkillBubbles />
             <ExperienceTimeline />
-            <Recommendations />
+            <References />
             
             {/* Footer */}
             <footer className="footer">

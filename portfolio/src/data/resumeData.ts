@@ -51,13 +51,13 @@ export interface Reference {
 
 export const profile: ProfileData = {
   name: "Ryan Moe",
-  title: "Principle Engineer",
+  title: "Principal Engineer",
   yearsExperience: "9+ Years",
   phone: "801-671-9512",
   email: "ryanallenmoe@gmail.com",
   location: "Highland, UT",
   languages: ["English", "Japanese"],
-  summary: `Principle Engineer with over 9 years of experience building secure, scalable systems. 
+  summary: `Principal Engineer with over 9 years of experience building secure, scalable systems. 
   Specializing in end-to-end application development, AI integration, post-quantum encryption, 
   and test automation. Proven track record of delivering HIPAA-compliant solutions, 
   architecting CI/CD pipelines, and achieving significant cost reductions through intelligent automation.`
@@ -73,7 +73,7 @@ export const education: Education = {
 export const experiences: Experience[] = [
   {
     id: "visyfy",
-    title: "Principle Engineer",
+    title: "Principal Engineer",
     company: "Visyfy",
     location: "Remote",
     startDate: "2024",

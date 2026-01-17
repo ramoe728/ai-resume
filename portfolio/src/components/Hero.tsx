@@ -81,7 +81,7 @@ export function Hero() {
               <span>{profile.location}</span>
             </div>
             <a 
-              href="https://drive.google.com/uc?export=download&id=1406WoK-Z84UWhk1mdygm6pNxvvNpJxGt" 
+              href="https://drive.google.com/uc?export=download&id=1ph0vEOuJ3OArQ1b2u_CasimbOtpgYtkL" 
               target="_blank"
               rel="noopener noreferrer"
               className="contact-item resume-download"
